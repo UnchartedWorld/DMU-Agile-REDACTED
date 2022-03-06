@@ -30,7 +30,7 @@ namespace TestingFramework
             TestData.StaffNo = 2;
             TestData.StaffName = "Timothy Jones";
             TestData.StaffRole = "Union Buster";
-            TestData.DateofEmployment = DateTime.Now.Date;
+            TestData.DateOfEmployment = DateTime.Now.Date;
             TestData.StaffSalary = 30000;
             TestData.IsEmployed = true;
             // Adds the data to the list.
@@ -52,7 +52,7 @@ namespace TestingFramework
             TestStaff.StaffNo = 2;
             TestStaff.StaffName = "Timothy Jones";
             TestStaff.StaffRole = "Union Buster";
-            TestStaff.DateofEmployment = DateTime.Now.Date;
+            TestStaff.DateOfEmployment = DateTime.Now.Date;
             TestStaff.StaffSalary = 30000;
             TestStaff.IsEmployed = true;
             // Assigns the data to the property.
@@ -72,7 +72,7 @@ namespace TestingFramework
             TestData.StaffNo = 3;
             TestData.StaffName = "Timothy Jones";
             TestData.StaffRole = "Union Worker";
-            TestData.DateofEmployment = DateTime.Now.Date;
+            TestData.DateOfEmployment = DateTime.Now.Date;
             TestData.StaffSalary = 25000;
             TestData.IsEmployed = true;
             // Assigns data to test list.
