@@ -31,9 +31,9 @@ namespace Testing1
             // Creates some test data to assign to property.
             DateTime fakeDate = DateTime.Now.Date;
             // Assign the data to a property.
-            sampleStaff.DateofEmployment = fakeDate;
+            sampleStaff.DateOfEmployment = fakeDate;
             // Check to see if both are the same.
-            Assert.AreEqual(sampleStaff.DateofEmployment, fakeDate);
+            Assert.AreEqual(sampleStaff.DateOfEmployment, fakeDate);
         }
 
         [TestMethod]
@@ -151,7 +151,7 @@ namespace Testing1
             // Invokes the method.
             Found = sampleStaff.Find(StaffNo);
             // Checks the staff name.
-            if(sampleStaff.StaffName != "John Doe")
+            if(sampleStaff.StaffName != "Bilbo Baggins")
             {
                 dataOk = false;
             }
@@ -171,7 +171,7 @@ namespace Testing1
             // Invokes the method.
             Found = sampleStaff.Find(StaffNo);
             // Checks the staff role.
-            if (sampleStaff.StaffRole != "Manager")
+            if (sampleStaff.StaffRole != "Ring Bearer")
             {
                 dataOk = false;
             }
@@ -191,7 +191,7 @@ namespace Testing1
             // Invokes the method.
             Found = sampleStaff.Find(StaffNo);
             // Checks the date of employment.
-            if (sampleStaff.DateofEmployment != Convert.ToDateTime("21/04/2022 21:45:21"))
+            if (sampleStaff.DateOfEmployment != Convert.ToDateTime("04/03/2022 00:00:00"))
             {
                 dataOk = false;
             }
@@ -211,7 +211,7 @@ namespace Testing1
             // Invokes the method.
             Found = sampleStaff.Find(StaffNo);
             // Checks the staff salary.
-            if (sampleStaff.StaffSalary != Convert.ToInt32(24000))
+            if (sampleStaff.StaffSalary != Convert.ToInt32(23000))
             {
                 dataOk = false;
             }
@@ -250,7 +250,6 @@ namespace Testing1
         }
     }
 }
-
 
 namespace TestPlanImplementation
 {
@@ -734,6 +733,147 @@ namespace TestPlanImplementation
             Error = SampleStaff.Validation(StaffName, StaffRole, StaffSalary, DateOfEmployment);
             // Tests to see if this result is correct.
             Assert.AreEqual(Error, "");
+        }
+    }
+}
+
+namespace AddEditDeleteUpdateTests
+{
+    [TestClass]
+    public class tstStaff
+    {
+
+        [TestMethod]
+        public void AddMethodOk()
+        {
+            // Creates an instance of the class that we want to create.
+            clsStaffCollection StaffColl = new clsStaffCollection();
+            // Creates the item of test data.
+            clsStaff TestStaff = new clsStaff();
+            // Variable that'll store the primary key.
+            Int32 PrimaryKey = 0;
+            // Sets the test staff's properties.
+            TestStaff.StaffNo = 0;
+            TestStaff.StaffName = "Tommy Fury";
+            TestStaff.StaffRole = "Team Killer";
+            TestStaff.DateOfEmployment = DateTime.Now.Date;
+            TestStaff.StaffSalary = 32000;
+            TestStaff.IsEmployed = true;
+            // Sets thisStaff to the sample data.
+            StaffColl.ThisStaff = TestStaff;
+            // Adds the record
+            PrimaryKey = StaffColl.Add();
+            // Sets the primary key of the test data.
+            TestStaff.StaffNo = PrimaryKey;
+            // "Finds" the record.
+            StaffColl.ThisStaff.Find(PrimaryKey);
+            // Checks to see if they're the same.
+            Assert.AreEqual(StaffColl.ThisStaff, TestStaff);
+        }
+
+        [TestMethod]
+        public void UpdateMethodOk()
+        {
+            // Creates an instance of the class we want to create.
+            clsStaffCollection SampleColl = new clsStaffCollection();
+            // Creates an item of test data.
+            clsStaff TestStaff = new clsStaff();
+            // Variable used to store the primary key.
+            Int32 PrimaryKey = 0;
+            // Sets properties.
+            TestStaff.StaffName = "Timothy Jones";
+            TestStaff.StaffRole = "CEO Eliminator";
+            TestStaff.DateOfEmployment = DateTime.Now.Date;
+            TestStaff.StaffSalary = 65000;
+            TestStaff.IsEmployed = true;
+            // Sets ThisAddress to the sample data.
+            SampleColl.ThisStaff = TestStaff;
+            // Adds a record.
+            PrimaryKey = SampleColl.Add();
+            // Sets the primary key of the test data.
+            TestStaff.StaffNo = PrimaryKey;
+            // Modifies the test data.
+            TestStaff.StaffName = "Bobby Burns";
+            TestStaff.StaffRole = "CEO Protector";
+            TestStaff.DateOfEmployment = DateTime.Now.Date;
+            TestStaff.StaffSalary = 70000;
+            TestStaff.IsEmployed = true;
+            // Sets the record, based on new data.
+            SampleColl.ThisStaff = TestStaff;
+            // Updates the record.
+            SampleColl.Update();
+            // Finds the record.
+            SampleColl.ThisStaff.Find(PrimaryKey);
+            // Checks to see if they're the same, and thus updated.
+            Assert.AreEqual(SampleColl.ThisStaff, TestStaff);
+        }
+
+        [TestMethod]
+        public void DeleteMethodOk()
+        {
+            // Creates an instance of the class we want to create.
+            clsStaffCollection SampleColl = new clsStaffCollection();
+            // Creates an item of test data.
+            clsStaff TestStaff = new clsStaff();
+            // Variable used to store the primary key.
+            Int32 PrimaryKey = 0;
+            // Sets properties.
+            TestStaff.StaffName = "Timothy Jones";
+            TestStaff.StaffRole = "CEO Eliminator";
+            TestStaff.DateOfEmployment = DateTime.Now.Date;
+            TestStaff.StaffSalary = 65000;
+            TestStaff.IsEmployed = true;
+            // Sets ThisAddress to the sample data.
+            SampleColl.ThisStaff = TestStaff;
+            // Adds a record.
+            PrimaryKey = SampleColl.Add();
+            // Sets the primary key of the test data.
+            TestStaff.StaffNo = PrimaryKey;
+            // Finds the record.
+            SampleColl.ThisStaff.Find(PrimaryKey);
+            // Deletes the record.
+            SampleColl.Delete();
+            // Tries to find the record, which hopefully it shouldn't.
+            Boolean Found = SampleColl.ThisStaff.Find(PrimaryKey);
+            // Tests to see if the record was not found.
+            Assert.IsFalse(Found);
+        }
+
+        [TestMethod]
+        public void FilterByStaffRoleOk()
+        {
+            clsStaffCollection StaffColl = new clsStaffCollection();
+            // Creates an instance of the filtered data.
+            clsStaffCollection FilteredStaffColl = new clsStaffCollection();
+            // Applies a blank string (should return all records);
+            FilteredStaffColl.FilterByStaffRole("");
+            // Tests to see that two values are the same.
+            Assert.AreEqual(StaffColl.Count, FilteredStaffColl.Count);
+        }
+
+        [TestMethod]
+        public void FilterByStaffRoleDataFound()
+        {
+            // Creates an instance of the filtered data.
+            clsStaffCollection FilteredStaffColl = new clsStaffCollection();
+            // Variable that'll store outcome.
+            Boolean Ok = true;
+            // Apply to a staff role that currently exists. 
+            FilteredStaffColl.FilterByStaffRole("Manager");
+            // Check that the correct number of records are found.
+            if (FilteredStaffColl.Count == 1)
+            {
+                // Check if the ID of the record is correct.
+                if (FilteredStaffColl.StaffList[0].StaffNo != 1)
+                {
+                    Ok = false;
+                }
+                else
+                {
+                    Ok = false;
+                }
+            }
+            Assert.IsTrue(Ok);
         }
     }
 }

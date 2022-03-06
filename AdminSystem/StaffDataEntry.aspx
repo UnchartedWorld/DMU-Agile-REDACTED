@@ -12,7 +12,7 @@
     <form id="form1" runat="server">
         <div id="lblStaffNo">
             <asp:Label ID="Label1" runat="server" Text="Staff No" width="165px"></asp:Label>
-            <asp:TextBox ID="txtStaffNo" runat="server" TextMode="Number" OnTextChanged="txtStaffNo_TextChanged" ToolTip="Only used for the Find function." ></asp:TextBox>
+            <asp:TextBox ID="txtStaffNo" runat="server" TextMode="Number" ToolTip="Only used for the Find function." ></asp:TextBox>
             <asp:Button ID="btnFind" runat="server" style="margin-left: 8px" Text="Find" OnClick="btnFind_Click" />
         </div>
         <asp:Label ID="lblStaffName" runat="server" Text="Staff Name" width="165px"></asp:Label>
@@ -33,6 +33,7 @@
         <br />
         <asp:Button ID="btnOk" runat="server" Text="OK" OnClick="btnOk_Click" />
         <asp:Button ID="btnCancel" runat="server" Text="Cancel" style="margin-left: 5px" />
+        <asp:Button ID="btnListView" runat="server" style="margin-left: 5px" Text="View Staff" Width="88px" OnClick="btnListView_Click" />
         <br />
         <asp:Label ID="lblError" runat="server" Font-Bold="True" Font-Italic="True" ForeColor="#FF5050"></asp:Label>
     </form>

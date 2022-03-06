@@ -11,7 +11,10 @@
 <body>
     <form id="form1" runat="server">
         <div>
+            <h2> Are you certain you wish to delete this record?</h2>
         </div>
+        <asp:Button ID="btnYes" runat="server" Text="Yes" style="margin-left: 5px" OnClick="btnYes_Click" />
+        <asp:Button ID="btnNo" runat="server" Text="No" style="margin-left: 5px" OnClick="btnNo_Click" />
     </form>
 </body>
 </html>
