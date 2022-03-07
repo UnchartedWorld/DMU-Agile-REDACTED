@@ -11,7 +11,7 @@
 <body>
     <form id="form1" runat="server">
         <div id="lblStaffNo">
-            <asp:Label ID="Label1" runat="server" Text="Staff No" width="165px"></asp:Label>
+            <asp:Label ID="lblStaffNo" runat="server" Text="Staff No" width="165px"></asp:Label>
             <asp:TextBox ID="txtStaffNo" runat="server" TextMode="Number" ToolTip="Only used for the Find function." ></asp:TextBox>
             <asp:Button ID="btnFind" runat="server" style="margin-left: 8px" Text="Find" OnClick="btnFind_Click" />
         </div>
