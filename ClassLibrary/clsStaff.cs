@@ -6,19 +6,19 @@ namespace ClassLibrary
     public class clsStaff
     {
 
-        // Adds private DateofEmployment variable.
-        private DateTime mDateofEmployment;
-        public DateTime DateofEmployment
+        // Adds private DateOfEmployment variable.
+        private DateTime mDateOfEmployment;
+        public DateTime DateOfEmployment
         {
             get
             {
                 // Returns the private data.
-                return mDateofEmployment;
+                return mDateOfEmployment;
             }
             set
             {
                 // Sets the private data.
-                mDateofEmployment = value;
+                mDateOfEmployment = value;
             }
         }
 
@@ -120,7 +120,7 @@ namespace ClassLibrary
                 mStaffNo = Convert.ToInt32(DB.DataTable.Rows[0]["StaffNo"]);
                 mStaffName = Convert.ToString(DB.DataTable.Rows[0]["StaffName"]);
                 mStaffRole = Convert.ToString(DB.DataTable.Rows[0]["StaffRole"]);
-                mDateofEmployment = Convert.ToDateTime(DB.DataTable.Rows[0]["DateOfEmployment"]);               
+                mDateOfEmployment = Convert.ToDateTime(DB.DataTable.Rows[0]["DateOfEmployment"]);               
                 mStaffSalary = Convert.ToInt32(DB.DataTable.Rows[0]["StaffSalary"]);
                 mIsEmployed = Convert.ToBoolean(DB.DataTable.Rows[0]["IsEmployed"]);
 
