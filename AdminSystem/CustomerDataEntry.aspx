@@ -12,6 +12,7 @@
         </div>
         <asp:Label ID="lblCustomerName" runat="server" Text="Customer Name"></asp:Label>
         <asp:TextBox ID="txtCustomerName" runat="server"></asp:TextBox>
+        <asp:Button ID="btnFind" runat="server" OnClick="btnFind_Click" Text="Find" />
         <p>
             <asp:Label ID="lblCustomerID" runat="server" Text="Customer ID" width="100px"></asp:Label>
             <asp:TextBox ID="txtCustomerID" runat="server"></asp:TextBox>
@@ -41,4 +42,5 @@
     </form>
 </body>
 </html>
+
 
