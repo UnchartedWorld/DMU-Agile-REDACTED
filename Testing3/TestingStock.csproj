@@ -49,10 +49,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="clsStock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="tstStock.cs" />
-    <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
