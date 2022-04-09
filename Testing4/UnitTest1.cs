@@ -80,7 +80,6 @@ namespace Testing4
             clsOrder AnOrder = new clsOrder();
             //create some test data to assign to the property
             double TestData = 59.99;
-            double TestData = 59.99;
             //assign the data to the property
             AnOrder.Price = TestData;
             //test to see that the two values are the same
