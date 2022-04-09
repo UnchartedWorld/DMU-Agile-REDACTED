@@ -200,7 +200,7 @@ namespace Testing3
             //string variable to store any error message
             String Error = "";
             //create some test data to pass to the method
-            string FunkoName = "012345678901234567890123456789"; //this should be ok
+            string GameDescription = "012345678901234567890123456789"; //this should be ok
             //invoke the method
             Error = AnStock.Valid(Price, GameDescription, AgeRating, DateAdded);
             //test to see that the result is correct
