@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace ClassLibrary
 {
@@ -81,34 +82,123 @@ namespace ClassLibrary
                 mGameNo = value;
             }
         }
-        private double mPrice;
-        public double Price
+        private double mTotalPrice;
+        public double TotalPrice
         {
             get
             {
                 //return the private data
-                return mPrice;
+                return mTotalPrice;
             }
             set
             {
                 //set the private data
-                mPrice = value;
+                mTotalPrice = value;
             }
         }
 
 
-        public bool Find(int orderNo)
+        public bool Find(int OrderNo)
         {
-            //set the private data members to the test data value
-            mOrderNo = 69;
-            mAvailable = true;
-            mGameNo = 19;
-            mPrice = 59.99;
-            mGameTitle = "Eldenring";
-            mDateAdded = Convert.ToDateTime("01/3/2022");
+            //create an instance of the data connection
+            clsDataConnection DB = new clsDataConnection();
+            //add the parameter for the order number to search for
+            DB.AddParameter("@OrderNo", OrderNo);
+            //if one record is found (there should be either one or zero!)
 
-            //always return true
-            return true;
+            DB.Execute("sproc_tblOrder_FilterByOrderNo");
+            if (DB.Count == 1)
+            {
+                //copy the data from the database to the private data members
+                mOrderNo = Convert.ToInt32(DB.DataTable.Rows[0]["OrderNo"]);
+                mAvailable = Convert.ToBoolean(DB.DataTable.Rows[0]["Available"]);
+                mGameNo = Convert.ToInt32(DB.DataTable.Rows[0]["GameNo"]);
+                mTotalPrice = Convert.ToInt32(DB.DataTable.Rows[0]["TotalPrice"]);
+                mGameTitle = Convert.ToString(DB.DataTable.Rows[0]["GameTitle"]);
+                mDateAdded = Convert.ToDateTime(DB.DataTable.Rows[0]["DateAdded"]);
+                //return that everything worked OK
+                return true;
+            }
+            //if no record was found
+            else
+            {
+                //return false indicating a problem
+                return false;
+            }
+        }
+
+        public string Valid(
+
+            string gameTitle,
+            string totalPrice,
+            string gameNo,
+            string dateAdded)
+
+
+        {
+            {
+                String Error = "";
+                DateTime DateTemp;
+
+                if (gameTitle.Length == 0)
+                {
+                    Error = Error + "The Game Title may not be blank : ";
+                }
+                if (gameTitle.Length > 25)
+                {
+                    Error = Error + "The Game Title must be less than 25 characters : ";
+                }
+
+                try
+                {
+                    DateTemp = Convert.ToDateTime(dateAdded);
+                    if (DateTemp < DateTime.Now.Date)
+                    {
+                        Error = Error + "The date cannot be in the past : ";
+                    }
+                    if (DateTemp > DateTime.Now.Date)
+                    {
+                        Error = Error + "The date cannot be in the future : ";
+                    }
+                }
+                catch
+                {
+                    Error = Error + "the date was not a valid date : ";
+                }
+                try
+                {
+                    if (totalPrice.Length == 0)
+                    {
+                        Error = Error + "price cannot be 0 : ";
+                    }
+                    if (totalPrice.Length > 9)
+                    {
+                        Error = Error + "price cannot be more than 999999999 : ";
+                    }
+                }
+                catch
+                {
+                    Error = Error + "The price was not a valid price : ";
+                }
+
+                try
+                {
+                    if (gameNo.Length == 0)
+                    {
+                        Error = Error + "Game Number cannot be 0 : ";
+                    }
+                    if (gameNo.Length > 999)
+                    {
+                        Error = Error + "Game Number cannot be more than 999999999 : ";
+                    }
+                }
+                catch
+                {
+                    Error = Error + "The Game Number was not a valid Number : ";
+                }
+
+                return Error;
+            }
         }
     }
 }
