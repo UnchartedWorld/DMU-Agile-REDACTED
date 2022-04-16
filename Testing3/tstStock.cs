@@ -350,7 +350,7 @@ namespace Testing3
             //string variable to store any error message
             String Error = "";
             //convert the date variable to a string variable
-            string DateAdded = "this is not a date!";
+            string DateAdded = "this is not a valid date!";
             //invoke the method
             Error = AnStock.Valid(Price, GameDescription, AgeRating, DateAdded);
             //test to see that the result is correct
