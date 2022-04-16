@@ -769,6 +769,9 @@ namespace AddEditDeleteUpdateTests
             StaffColl.ThisStaff.Find(PrimaryKey);
             // Checks to see if they're the same.
             Assert.AreEqual(StaffColl.ThisStaff, TestStaff);
+            // Deletes Tommy Fury from database, making sure not to pollute database with needless data.
+            // Will increment primary key however, so bear that in mind.
+            StaffColl.Delete();
         }
 
         [TestMethod]
@@ -806,6 +809,8 @@ namespace AddEditDeleteUpdateTests
             SampleColl.ThisStaff.Find(PrimaryKey);
             // Checks to see if they're the same, and thus updated.
             Assert.AreEqual(SampleColl.ThisStaff, TestStaff);
+            // Deletes potential duplicates, ensuring it doesn't pollute the database with junk data.
+            SampleColl.Delete();
         }
 
         [TestMethod]

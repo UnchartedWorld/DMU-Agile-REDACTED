@@ -29,6 +29,13 @@ public partial class _1_List : System.Web.UI.Page
         lstStaffList.DataTextField = "StaffName";
         // Binds the data to the list.
         lstStaffList.DataBind();
+
+        // Adds an if condition in the scenario where the system lacks data due to being fresh and new.
+        if (lstStaffList == null)
+        {
+            lblError.Text += "List is empty. This may be due to a connection issue, or more likely, there isn't data in the system. " +
+                "If you find it to be the latter, please enter data." + "<br />";
+        }
     }
 
     // This'll display the staff roles for the end user to select.
@@ -44,6 +51,11 @@ public partial class _1_List : System.Web.UI.Page
         DropDownLst.DataTextField = "StaffRole";
         // Binds the data to the list.
         DropDownLst.DataBind();
+
+        if (DropDownLst == null)
+        {
+            lblError.Text += "List is empty, so the drop down list is also empty. There likely isn't any data in the system, so please add some." + "<br />"; 
+        }
     }
 
     protected void btnAdd_Click(object sender, EventArgs e)
