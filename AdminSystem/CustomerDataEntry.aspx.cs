@@ -8,13 +8,37 @@ using ClassLibrary;
 
 public partial class _1_DataEntry : System.Web.UI.Page
 {
+    //variable to store the primary key with page level scope
+    Int32 CustomerId;
     protected void Page_Load(object sender, EventArgs e)
-    { //create a new instance of clsCustomer
-        clsCustomer ACustomer = new clsCustomer();
-        //get the data from the session object
-        ACustomer = (clsCustomer)Session["ACustomer"];
-        //display the customer name for this entry
-        Response.Write(ACustomer.CustomerName);
+    {
+        //get the number of the customer to be processed
+        CustomerId = Convert.ToInt32(Session["CustomerId"]);
+        if (IsPostBack == false) 
+        {
+            //if this is not a new record
+            if (CustomerId != -1)
+            {
+                //display the current data for the record
+                DisplayCustomer();
+            }
+        }
+
+    }
+
+    void DisplayCustomer()
+    {
+        //create an instance of the address book
+        clsCustomerCollection CustomerList = new clsCustomerCollection();
+        //find the record to update
+        CustomerList.ThisCustomer.Find(CustomerId);
+        //display the data fro this record
+        txtCustomerID.Text = CustomerList.ThisCustomer.CustomerID.ToString();
+        txtCustomerName.Text = CustomerList.ThisCustomer.CustomerName;
+        txtCustomerEmail.Text = CustomerList.ThisCustomer.CustomerEmail;
+        txtCustomerPassword.Text = CustomerList.ThisCustomer.CustomerPassword;
+        txtDateAdded.Text = CustomerList.ThisCustomer.DateAdded.ToString();
+        chkAvailable.Checked = CustomerList.ThisCustomer.UsernameAvailable;
 
     }
 
@@ -24,8 +48,6 @@ public partial class _1_DataEntry : System.Web.UI.Page
         clsCustomer ACustomer = new clsCustomer();
         //capture the customer name
         string CustomerName = txtCustomerName.Text;
-        //capture the customer ID
-        int CustomerID = Convert.ToInt32(txtCustomerID.Text);
         //capture the customer email
         string CustomerEmail = txtCustomerEmail.Text;
         //capture the customer password
@@ -38,6 +60,8 @@ public partial class _1_DataEntry : System.Web.UI.Page
         Error = ACustomer.Valid(CustomerName, CustomerEmail, CustomerPassword, DateAdded);
         if (Error == "")
         {
+            //capture the customerId
+            ACustomer.CustomerID = CustomerId;
             //capture the customer name
             ACustomer.CustomerName = CustomerName;
             //capture the customer email
@@ -46,10 +70,32 @@ public partial class _1_DataEntry : System.Web.UI.Page
             ACustomer.CustomerPassword = CustomerPassword;
             //capture the date added 
             ACustomer.DateAdded = Convert.ToDateTime(DateAdded);
-            //store the address in the session object
-            Session["Acustomer"] = ACustomer;
-            //redirect to the viewer page
-            Response.Write("CustomerViewer.aspx");
+            //capture active
+            ACustomer.UsernameAvailable = chkAvailable.Checked;
+            //create a new instance of the address collection
+            clsCustomerCollection CustomerList = new clsCustomerCollection();
+            //if this is a new record i.e. CustomerId = -1 then add the data
+            if (CustomerId == -1)
+            {
+                //set the ThisCustomer property
+                CustomerList.ThisCustomer = ACustomer;
+                //add the new record
+                CustomerList.Add();
+            }
+            //otherwise it must be an update
+            else 
+            {
+                //find the record to update
+                CustomerList.ThisCustomer.Find(CustomerId);
+                //set the ThisCustomer property
+                CustomerList.ThisCustomer = ACustomer;
+                //update the record
+                CustomerList.Update();
+            }
+            //redirect back to the listpage
+            Response.Redirect("CustomerList.aspx");
+            
+            
 
         }
         else

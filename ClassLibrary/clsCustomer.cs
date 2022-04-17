@@ -103,11 +103,11 @@ namespace ClassLibrary
 
                 //copy the data from the database to the private data members
                 mCustomerId = Convert.ToInt32(DB.DataTable.Rows[0]["CustomerId"]);
-            mUsernameAvailable = Convert.ToBoolean(DB.DataTable.Rows[0]["IsAvailable"]);
-            mCustomerEmail = Convert.ToString(DB.DataTable.Rows[0]["CustomerEmail"]);
             mCustomerName = Convert.ToString(DB.DataTable.Rows[0]["CustomerName"]);
-            mCustomerPassword = Convert.ToString(DB.DataTable.Rows[0]["CustomerPassword"]);
             mDateAdded = Convert.ToDateTime(DB.DataTable.Rows[0]["DateCreated"]);
+            mCustomerEmail = Convert.ToString(DB.DataTable.Rows[0]["CustomerEmail"]);
+            mCustomerPassword = Convert.ToString(DB.DataTable.Rows[0]["CustomerPassword"]);
+            mUsernameAvailable = Convert.ToBoolean(DB.DataTable.Rows[0]["IsAvailable"]);
             //always return true
             return true;
         }
