@@ -12,34 +12,13 @@ namespace ClassLibrary
 
         public clsCustomerCollection()
         {
-            //var for the index
-            Int32 Index = 0;
-            //var to score the record count
-            Int32 RecordCount = 0;
             //object for data connection
             clsDataConnection DB = new clsDataConnection();
-            //execute the stored procedure
+            //execute the store procedure
             DB.Execute("sproc_tblCustomer_SelectAll");
-            //get the count of records
-            RecordCount = DB.Count;
-            //while there are records to process
-            while (Index < RecordCount)
-            {
-                //create a blank customer
-                clsCustomer ACustomer = new clsCustomer();
-                //read in the fields from the current record
-                ACustomer.UsernameAvailable = Convert.ToBoolean(DB.DataTable.Rows[Index]["IsAvailable"]);
-                ACustomer.CustomerID = Convert.ToInt32(DB.DataTable.Rows[Index]["CustomerId"]);
-                ACustomer.DateAdded = Convert.ToDateTime(DB.DataTable.Rows[Index]["DateCreated"]);
-                ACustomer.CustomerName = Convert.ToString(DB.DataTable.Rows[Index]["CustomerName"]);
-                ACustomer.CustomerPassword = Convert.ToString(DB.DataTable.Rows[Index]["CustomerPassword"]);
-                ACustomer.CustomerEmail = Convert.ToString(DB.DataTable.Rows[Index]["CustomerEmail"]);
-                //add the record to the private data member
-                mCustomerList.Add(ACustomer);
-                //point at the next record
-                Index++;
-
-            }
+            //populate the array list with the data table
+            PopulateArray(DB);
+            
         }
 
 
@@ -124,7 +103,50 @@ namespace ClassLibrary
             //set the parameters for the stored procedure
             DB.AddParameter("@CustomerId", mThisCustomer.CustomerID);
             //execute the stored procedure
-            DB.Execute("sproc_tblCustomer_Delete");
+            DB.Execute("sproc_tblCustomer_Delete"); 
+        }
+
+        public void ReportByCustomerEmail(string CustomerEmail)
+        {
+            //filters the record based on a full or partial email
+            //connect to the database
+            clsDataConnection DB = new clsDataConnection();
+            //send the PostCode parameter to the database
+            DB.AddParameter("@CustomerEmail", CustomerEmail);
+            //execute the stored procedure
+            DB.Execute("sproc_tblCustomer_FilterByCustomerEmail");
+            //populate the array list with the data table
+            PopulateArray(DB);
+        }
+
+        void PopulateArray(clsDataConnection DB)
+        {
+            //populates the array list based on the data table in the parametere DB
+            //var for the index
+            Int32 Index = 0;
+            //var to store the record count
+            Int32 RecordCount;
+            //get the count of records
+            RecordCount = DB.Count;
+            //clear the private array list
+            mCustomerList = new List<clsCustomer>();
+            //while there are records to process
+            while (Index < RecordCount) 
+            {
+                //create a blank customer
+                clsCustomer ACustomer = new clsCustomer();
+                //read in the fields from the current record
+                ACustomer.UsernameAvailable = Convert.ToBoolean(DB.DataTable.Rows[Index]["IsAvailable"]);
+                ACustomer.CustomerID = Convert.ToInt32(DB.DataTable.Rows[Index]["CustomerId"]);
+                ACustomer.CustomerName = Convert.ToString(DB.DataTable.Rows[Index]["CustomerName"]);
+                ACustomer.CustomerPassword = Convert.ToString(DB.DataTable.Rows[Index]["CustomerPassword"]);
+                ACustomer.CustomerEmail = Convert.ToString(DB.DataTable.Rows[Index]["CustomerEmail"]);
+                ACustomer.DateAdded = Convert.ToDateTime(DB.DataTable.Rows[Index]["DateCreated"]);
+                //add the record to the private data member
+                mCustomerList.Add(ACustomer);
+                //point at the next record
+                Index++;
+            }
         }
     }
 }

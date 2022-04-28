@@ -127,9 +127,12 @@ public partial class _1_DataEntry : System.Web.UI.Page
             txtCustomerEmail.Text = ACustomer.CustomerEmail;
             txtCustomerPassword.Text = ACustomer.CustomerPassword;
             txtDateAdded.Text = ACustomer.DateAdded.ToString();
-
+            chkAvailable.Checked = ACustomer.UsernameAvailable;
 
         }
+
+        else
+            lblError.Text = "Entry not found in databse, try another number";
 
     }
 }

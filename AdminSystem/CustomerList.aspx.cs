@@ -77,12 +77,43 @@ public partial class _1_List : System.Web.UI.Page
             //store the data in the session object
             Session["CustomerId"] = CustomerId;
             //Redirect to the delete page
-            Response.Redirect("CustomerConfirmDelete.aspxx");
+            Response.Redirect("CustomerConfirmDelete.aspx");
         }
         else //if no record has been selected
         {
             lblError.Text = "Please select a record to delete from the list";
         }
+
+    }
+
+    protected void btnApply_Click(object sender, EventArgs e)
+    {
+        //create an instance of the customer collection
+        clsCustomerCollection Customers = new clsCustomerCollection();
+        Customers.ReportByCustomerEmail(txtFilter.Text);
+        lstCustomerList.DataSource = Customers.CustomerList;
+        //set the name of the primary key
+        lstCustomerList.DataValueField = "CustomerId";
+        //set the name of the field to display
+        lstCustomerList.DataTextField = "CustomerEmail";
+        //bind the data to the list
+        lstCustomerList.DataBind();
+    }
+
+    protected void btnClear_Click(object sender, EventArgs e)
+    {
+        //create an instance of the customer collection
+        clsCustomerCollection Customers = new clsCustomerCollection();
+        Customers.ReportByCustomerEmail("");
+        //clear any existing filter to tidy up the interface
+        txtFilter.Text = "";
+        lstCustomerList.DataSource = Customers.CustomerList;
+        //set the name of the primary key
+        lstCustomerList.DataValueField = "CustomerId";
+        //set the name of the field to display
+        lstCustomerList.DataTextField = "CustomerEmail";
+        //bind the data to the list
+        lstCustomerList.DataBind();
 
     }
 }

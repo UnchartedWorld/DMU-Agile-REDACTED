@@ -15,15 +15,17 @@ public partial class _1_ConfirmDelete : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         //get the number of the Customer to be deleted from the session object
-        CustomerId = Convert.ToInt32(Session["CustomerId"]);
+        CustomerId = Convert.ToInt32(Session["CustomerID"]);
     }
 
     protected void btnYes_Click(object sender, EventArgs e)
     {
         //create a new instanceof the CUstomer List Class
-        clsCustomerCollection CustomerList = new clsCustomerCollection();
+        clsCustomerCollection CustomerCollect = new clsCustomerCollection();
         //find the record to delete
-        CustomerList.Delete();
+        CustomerCollect.ThisCustomer.Find(CustomerId);
+        //delete the record
+        CustomerCollect.Delete();
         //redirect back to the main page
         Response.Redirect("CustomerList.aspx");
 
@@ -31,6 +33,6 @@ public partial class _1_ConfirmDelete : System.Web.UI.Page
 
     protected void btnNo_Click(object sender, EventArgs e)
     {
-
+        Response.Redirect("CustomerList.aspx");
     }
 }

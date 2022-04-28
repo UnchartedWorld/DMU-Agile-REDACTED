@@ -100,17 +100,25 @@ namespace ClassLibrary
             DB.Execute("sproc_tblCustomer_FilterByCustomerId");
             //if one record is found
             if (DB.Count == 1)
+            {
 
                 //copy the data from the database to the private data members
                 mCustomerId = Convert.ToInt32(DB.DataTable.Rows[0]["CustomerId"]);
-            mCustomerName = Convert.ToString(DB.DataTable.Rows[0]["CustomerName"]);
-            mDateAdded = Convert.ToDateTime(DB.DataTable.Rows[0]["DateCreated"]);
-            mCustomerEmail = Convert.ToString(DB.DataTable.Rows[0]["CustomerEmail"]);
-            mCustomerPassword = Convert.ToString(DB.DataTable.Rows[0]["CustomerPassword"]);
-            mUsernameAvailable = Convert.ToBoolean(DB.DataTable.Rows[0]["IsAvailable"]);
-            //always return true
-            return true;
+                mCustomerName = Convert.ToString(DB.DataTable.Rows[0]["CustomerName"]);
+                mDateAdded = Convert.ToDateTime(DB.DataTable.Rows[0]["DateCreated"]);
+                mCustomerEmail = Convert.ToString(DB.DataTable.Rows[0]["CustomerEmail"]);
+                mCustomerPassword = Convert.ToString(DB.DataTable.Rows[0]["CustomerPassword"]);
+                mUsernameAvailable = Convert.ToBoolean(DB.DataTable.Rows[0]["IsAvailable"]);
+                //always return true
+                return true;
+            }// if there is no record found
+            else 
+            {
+                return false; 
+            }
+                
         }
+        
 
         public string Valid(string customerName, string customerEmail, string customerPassword, string dateAdded)
         {
